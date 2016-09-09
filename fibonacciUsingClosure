@@ -1,0 +1,31 @@
+// My answer to the exercise at https://tour.golang.org/moretypes/26
+
+package main
+
+import "fmt"
+
+// fibonacci is a function that returns an anonymous function that returns an int
+func fibonacci() func() int {
+	step, curr, next := 0, 0 , 1
+	return func() int {
+		if step == 0 {           // return the 1st seed of the Fibonacci sequence
+			step++
+			return curr
+		} else if step == 1 {    // return the 2nd seed of the Fibonacci sequence
+			step++
+			return next
+		} else {                 // return the next value in the sequence after the seeds
+			sum := curr + next
+			curr = next
+			next = sum
+			return sum
+		}
+	}
+}
+
+func main() {
+	f := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
+}
